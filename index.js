@@ -3,7 +3,7 @@ import fs from 'fs';
 
 (async () => {
     // Launch the browser and open a new blank page
-    const browser = await puppeteer.launch({ headless: false });
+    const browser = await puppeteer.launch();
     const page = await browser.newPage();
 
     // Navigate the page to a URL
@@ -12,7 +12,7 @@ import fs from 'fs';
     });
 
     // Set screen size.
-    await page.setViewport({ width: 1080, height: 1024 });
+    //await page.setViewport({ width: 1080, height: 1024 });
 
     // 'button' is a CSS selector.
     await page.locator('button').click();
