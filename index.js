@@ -1,4 +1,5 @@
 import puppeteer from 'puppeteer';
+import fs from 'fs';
 
 (async () => {
     // Launch the browser and open a new blank page
@@ -16,31 +17,29 @@ import puppeteer from 'puppeteer';
     // 'button' is a CSS selector.
     await page.locator('button').click();
 
-    await page.evaluate(() => {
+    const imgList = await page.evaluate(() => {
 
-        // toda essa função será executada no browser 
-
-        // vamos pegar todas as imagens que estão na parte de posts
-        const NodeList = document.querySelectorAll('article img');
-        // transformar o NodeList em array
+        const NodeList = document.querySelectorAll("article img");
         const imgArray = [...NodeList];
 
-        // transformar os nodes(elementos html) em objetos JS
-        const list = imgArray.map(({ src }) => ({
-            src
+        const imgList = imgArray.map(({ src }) => ({
+            src,
         }));
 
-        console.log(list);
         // colocar o resultado para fora da função
+        return imgList;
     });
 
+    // escrever os dados em um arquivo local (json)
+    fs.writeFile('instagram.json', JSON.stringify(imgList, null, 2), err => {
+        if (err) throw new Error('something went wrong')
+        console.log('well done!')
+    })
 
 
 
 
-    //await page.screenshot({ path: 'insta3.png' });
 
 
-
-    //await browser.close();
+    await browser.close();
 })();
