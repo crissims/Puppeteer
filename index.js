@@ -16,17 +16,31 @@ import puppeteer from 'puppeteer';
     // 'button' is a CSS selector.
     await page.locator('button').click();
 
-    // Type into search box.
-    //await page.locator('.devsite-search-field').fill('automate beyond recorder');
+    await page.evaluate(() => {
 
-    // Wait and click on first result.
-    //await page.locator('.devsite-result-item-link').click();
+        // toda essa função será executada no browser 
+
+        // vamos pegar todas as imagens que estão na parte de posts
+        const NodeList = document.querySelectorAll('article img');
+        // transformar o NodeList em array
+        const imgArray = [...NodeList];
+
+        // transformar os nodes(elementos html) em objetos JS
+        const list = imgArray.map(({ src }) => ({
+            src
+        }));
+
+        console.log(list);
+        // colocar o resultado para fora da função
+    });
 
 
 
-    await page.screenshot({ path: 'insta3.png' });
+
+
+    //await page.screenshot({ path: 'insta3.png' });
 
 
 
-    await browser.close();
+    //await browser.close();
 })();
